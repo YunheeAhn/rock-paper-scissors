@@ -8,7 +8,7 @@ import Box from "./component/Box";
 // 3. 버튼 클릭시 클릭 한 값이 박스에 보임
 // 4. 컴퓨터는 랜덤으로 값이 정해짐
 // 5. 3번과 4번의 결과를 갖고 누가 이겼는지 승패를 확인한다
-// 6. 승패 결과에 따라 테두리 색이 변경(이기면-초록, 지면-빨강, 비기면-검정)
+// 6. 승패 결과에 따라 테두리 색이 변경(이기면-파랑, 지면-빨강, 비기면-검정)
 
 // 박스는 컴포넌트로 따로 생성
 
@@ -28,11 +28,14 @@ const choice = {
   },
 };
 
+// 초기 이미지 설정
+const defaultImage = "https://cdn-icons-png.flaticon.com/512/3524/3524335.png";
+
 function App() {
   // 사용자 선택 상태
-  const [userSelect, setUserSelect] = useState(null);
+  const [userSelect, setUserSelect] = useState({ name: "", img: defaultImage });
   // 컴퓨터 선택 상태
-  const [comSelect, setComSelect] = useState(null);
+  const [comSelect, setComSelect] = useState({ name: "", img: defaultImage });
   // 승패 상태
   const [result, setResult] = useState("");
 
@@ -66,30 +69,46 @@ function App() {
   const judgement = (user, com) => {
     // 비긴 경우
     if (user.name === com.name) {
-      return "TIE";
-    } else if (user.name === "바위") return com.name === "가위" ? "WIN" : "LOSE";
-    else if (user.name === "가위") return com.name === "보" ? "WIN" : "LOSE";
-    else if (user.name === "보") return com.name === "바위" ? "WIN" : "LOSE";
-    else return "LOSE";
+      return "tie";
+    } else if (user.name === "바위") return com.name === "가위" ? "win" : "lose";
+    else if (user.name === "가위") return com.name === "보" ? "win" : "lose";
+    else if (user.name === "보") return com.name === "바위" ? "win" : "lose";
+    else return "lose";
   };
+
+  //초기화
+  const resetGame = () => {
+    setUserSelect({ name: "", img: defaultImage });
+    setComSelect({ name: "", img: defaultImage });
+    setResult("");
+  };
+
+  // 몇 대 몇인지 카운팅하기
 
   return (
     <>
       <div className="main">
         <Box title="당신" item={userSelect} result={result} />
-        <Box
-          title="컴퓨터"
-          item={comSelect}
-          result={result === "WIN" ? "LOSE" : result === "LOSE" ? "WIN" : "TIE"}
-        />
 
         <div className="btn_wrap">
           <button onClick={() => play("scissors")}>가위</button>
           <button onClick={() => play("rock")}>바위</button>
           <button onClick={() => play("paper")}>보</button>
+          {userSelect.name && (
+            <button onClick={resetGame} className="reset">
+              다시하기
+            </button>
+          )}
         </div>
 
-        {/* <Box title="컴퓨터" /> */}
+        <Box title="컴퓨터" item={comSelect} result={result} />
+      </div>
+
+      <div className="explain">
+        <p>
+          버튼을 클릭하여 가위, 바위, 보 중 하나를 선택하세요. <br />
+          컴퓨터는 랜덤으로 선택합니다.
+        </p>
       </div>
     </>
   );
