@@ -33,6 +33,8 @@ function App() {
   const [userSelect, setUserSelect] = useState(null);
   // 컴퓨터 선택 상태
   const [comSelect, setComSelect] = useState(null);
+  // 승패 상태
+  const [result, setResult] = useState("");
 
   const play = (userChoice) => {
     // 사용자 선택
@@ -41,6 +43,10 @@ function App() {
     // 컴퓨터 선택
     let comChoice = randomChoice();
     setComSelect(comChoice);
+
+    // 승패 판단
+    // 사용자가 선택한 값과 컴퓨터가 선택한 값을 전달
+    setResult(judgement(choice[userChoice], comChoice));
   };
 
   // 컴퓨터의 가위,바위,보 랜덤 선택 함수
@@ -56,11 +62,26 @@ function App() {
     return choice[final];
   };
 
+  // 승패 판단 함수
+  const judgement = (user, com) => {
+    // 비긴 경우
+    if (user.name === com.name) {
+      return "TIE";
+    } else if (user.name === "바위") return com.name === "가위" ? "WIN" : "LOSE";
+    else if (user.name === "가위") return com.name === "보" ? "WIN" : "LOSE";
+    else if (user.name === "보") return com.name === "바위" ? "WIN" : "LOSE";
+    else return "LOSE";
+  };
+
   return (
     <>
       <div className="main">
-        <Box title="당신" item={userSelect} />
-        <Box title="컴퓨터" item={comSelect} />
+        <Box title="당신" item={userSelect} result={result} />
+        <Box
+          title="컴퓨터"
+          item={comSelect}
+          result={result === "WIN" ? "LOSE" : result === "LOSE" ? "WIN" : "TIE"}
+        />
 
         <div className="btn_wrap">
           <button onClick={() => play("scissors")}>가위</button>
