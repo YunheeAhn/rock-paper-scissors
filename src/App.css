@@ -1,13 +1,115 @@
-.box {
-  border: 1px solid black;
-  width: 200px;
-  height: 300px;
-  text-align: center;
-  margin: 10px;
+/* 변수 */
+@import url("/src/index.css");
+/* 폰트 */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+/* 영문 */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-
 .main {
+  max-width: 900px;
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  gap: 10px;
+}
+
+.box {
+  width: calc((100% - 140px) / 2);
+  height: 300px;
+  border: 5px solid var(--main);
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.box img {
+  max-width: 86px;
+  width: 100%;
+  height: auto;
+  margin: 10px 0;
+}
+
+.box h1 {
+  color: var(--black);
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.box p {
+  font-size: 2.6rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--black);
+  text-transform: uppercase;
+}
+
+.btn_wrap {
+  display: flex;
+  flex-direction: column;
+
+  transition: all 0.3s ease;
+}
+
+.btn_wrap button {
+  width: 120px;
+  height: 40px;
+  margin: 5px 0;
+  border: 1px solid var(--black);
+  border-radius: 10px;
+  background: var(--white);
+  cursor: pointer;
+
+  font-size: 1.1rem;
+  color: var(--black);
+  transition: all 0.3s ease;
+}
+
+.btn_wrap button.reset {
+  margin-top: 20px;
+  background: var(--sub);
+  border: none;
+  color: var(--white);
+}
+
+button:hover {
+  background: var(--border);
+}
+
+.btn_wrap button.reset:hover {
+  background: var(--light);
+  color: var(--white);
+}
+
+.win {
+  border-color: var(--blue-dark);
+  background: var(--blue-light);
+}
+.lose {
+  border-color: var(--orange);
+  background: var(--orange-light);
+
+  opacity: 0.8;
+}
+.tie {
+  border-color: var(--black);
+}
+
+.explain {
+  margin: 20px auto 0 auto;
+  text-align: center;
+  font-size: 1rem;
 }
