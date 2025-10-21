@@ -31,15 +31,36 @@ const choice = {
 function App() {
   // 사용자 선택 상태
   const [userSelect, setUserSelect] = useState(null);
+  // 컴퓨터 선택 상태
+  const [comSelect, setComSelect] = useState(null);
 
   const play = (userChoice) => {
+    // 사용자 선택
     setUserSelect(choice[userChoice]);
+
+    // 컴퓨터 선택
+    let comChoice = randomChoice();
+    setComSelect(comChoice);
+  };
+
+  // 컴퓨터의 가위,바위,보 랜덤 선택 함수
+  const randomChoice = () => {
+    // choice 객체의 키값을 배열로 변환
+    let itemArray = Object.keys(choice); // ['rock','paper','scissors'], 객체의 키값만 뽑아서 배열로 반환
+    // 0~2 사이의 랜덤 정수 생성
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+
+    // 랜덤으로 선택된 가위,바위,보
+    let final = itemArray[randomItem];
+    // choice 객체에서 최종 선택된 값 반환
+    return choice[final];
   };
 
   return (
     <>
       <div className="main">
         <Box title="당신" item={userSelect} />
+        <Box title="컴퓨터" item={comSelect} />
 
         <div className="btn_wrap">
           <button onClick={() => play("scissors")}>가위</button>
