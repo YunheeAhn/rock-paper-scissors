@@ -113,3 +113,27 @@ button:hover {
   text-align: center;
   font-size: 1rem;
 }
+
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .box {
+    width: 100%;
+  }
+  .btn_wrap {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn_wrap button {
+    width: 80px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  .reset {
+    margin-top: 5px !important;
+  }
+}
