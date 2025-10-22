@@ -14,10 +14,20 @@ const Box = (props) => {
   }
 
   return (
-    <div className={`box ${result}`}>
+    <div className={`box ${!props.countdown && result}`}>
       <h1>{props.title}</h1>
-      <img src={props.item && props.item.img} alt="가위바위보" />
-      <p>{result}</p>
+
+      {/* 카운트 다운 중일 때는 숫자 표시 */}
+      {props.countdown ? (
+        <div className="countdown">
+          <h2>{props.countdown}</h2>
+        </div>
+      ) : (
+        <img src={props.item && props.item.img} alt="가위바위보" />
+      )}
+
+      {/* 카운트 다운 중일 때는 결과 표시 X */}
+      {!props.countdown && <p>{result}</p>}
     </div>
   );
 };
