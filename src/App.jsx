@@ -38,25 +38,62 @@ function App() {
   const [comSelect, setComSelect] = useState({ name: "", img: defaultImage });
   // 승패 상태
   const [result, setResult] = useState("");
+  // 클릭시 3초 카운트다운
+  const [countdown, setCountdown] = useState(null); // 3,2,1 후 결과 표시
+  // 카운트다운 실행 상태
+  const [isCounting, setIsCounting] = useState(false); // 처음엔 실행X
 
   const play = (userChoice) => {
-    // 사용자 선택
-    setUserSelect(choice[userChoice]);
+    // play 함수가 실행되면 카운트다운 시작, 아니라면 시작X, 중복 방지
+    if (isCounting) return; // 이미 카운트다운 중이면 무시
 
-    // 컴퓨터 선택
-    let comChoice = randomChoice();
-    setComSelect(comChoice);
+    setIsCounting(true);
+    setCountdown(3);
+    let count = 3;
 
-    // 승패 판단
-    // 사용자가 선택한 값과 컴퓨터가 선택한 값을 전달
-    setResult(judgement(choice[userChoice], comChoice));
+    const countdownInterval = setInterval(() => {
+      count -= 1;
+      setCountdown(count);
+
+      if (count > 0) {
+        // 카운트 숫자가 3,2,1일때
+        setCountdown(count);
+      } else {
+        // 카운트 숫자가 0이 되면
+        clearInterval(countdownInterval);
+        setIsCounting(false);
+        setCountdown(null);
+
+        // 사용자 선택
+        setUserSelect(choice[userChoice]);
+
+        // 컴퓨터 선택
+        let comChoice = randomChoice();
+        setComSelect(comChoice);
+
+        // 승패 판단
+        // 사용자가 선택한 값과 컴퓨터가 선택한 값을 전달
+        setResult(judgement(choice[userChoice], comChoice));
+      }
+    }, 1000);
+
+    // // 사용자 선택
+    // setUserSelect(choice[userChoice]);
+
+    // // 컴퓨터 선택
+    // let comChoice = randomChoice();
+    // setComSelect(comChoice);
+
+    // // 승패 판단
+    // // 사용자가 선택한 값과 컴퓨터가 선택한 값을 전달
+    // setResult(judgement(choice[userChoice], comChoice));
   };
 
   // 컴퓨터의 가위,바위,보 랜덤 선택 함수
   const randomChoice = () => {
     // choice 객체의 키값을 배열로 변환
     let itemArray = Object.keys(choice); // ['rock','paper','scissors'], 객체의 키값만 뽑아서 배열로 반환
-    // 0~2 사이의 랜덤 정수 생성
+    //
     let randomItem = Math.floor(Math.random() * itemArray.length);
 
     // 랜덤으로 선택된 가위,바위,보
@@ -88,7 +125,7 @@ function App() {
   return (
     <>
       <div className="main">
-        <Box title="당신" item={userSelect} result={result} />
+        <Box title="당신" item={userSelect} result={result} countdown={countdown} />
 
         <div className="btn_wrap">
           <button onClick={() => play("scissors")}>가위</button>
@@ -101,7 +138,7 @@ function App() {
           )}
         </div>
 
-        <Box title="컴퓨터" item={comSelect} result={result} />
+        <Box title="컴퓨터" item={comSelect} result={result} countdown={countdown} />
       </div>
 
       <div className="explain">
