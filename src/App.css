@@ -114,6 +114,12 @@ button:hover {
   font-size: 1rem;
 }
 
+.countdown {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--main);
+}
+
 @media (max-width: 768px) {
   .main {
     flex-direction: column;
@@ -128,6 +134,8 @@ button:hover {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+
+    order: 3;
   }
   .btn_wrap button {
     width: 80px;
